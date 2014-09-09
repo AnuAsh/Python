@@ -1,0 +1,37 @@
+'''
+Created on Sep 9, 2014
+
+@author: Anusha
+'''
+import re
+from collections import Counter
+
+def get_words(file, new):
+    '''The function should take one argument which is a string'''
+    f1 = open(file, 'r')
+    f2 = open(new, 'w')
+    text = f1.read()
+    text = re.sub('[(){}!@#$,.]', '', text) #to remove special characters
+    a = text.split()   #to convert the sentence into words in a list
+    tally = Counter()   #initialize the 'tally' as counter variable
+    tot = len(a)
+    dictn = {}          #initializing empty dictionary
+    
+    for item in a:
+        tally[item]+=1
+        prob = tally[item]/tot
+        probs = (str(prob)) 
+        dictn[item] = probs
+    
+    for keys,values in dictn.items():
+        f2.write(keys )
+        f2.write("\t %s \n" %values)
+                 
+    
+    f1.close()
+    f2.close()
+
+print('Enter Source file name along with extension \n (Make sure the file in the source folder): ')   
+src_file = input()
+print('Result is in file "output.xls" in the source folder')
+get_words(src_file, 'output.xls')
